@@ -1,5 +1,8 @@
 package string;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringMulitply {
     public static void main(String[] args) {
         //System.out.println(addString("99", "1"));
@@ -11,6 +14,7 @@ public class StringMulitply {
         //不能使用内置函数转换为整数
         int len1 = num1.length();
         int len2 = num2.length();
+
 
         for (int i = 0; i < len1; i++) {
             intNum1 *= 10;
@@ -52,23 +56,34 @@ public class StringMulitply {
     }
 
     public static String multiply2(String num1, String num2){
+        if(num1.length()<num2.length()){
+            String temp = num1;
+            num1 = num2;
+            num2 = temp;
+        }
+        if(num1.equals("0")||num2.equals("0")){
+            return "0";
+        }
         int len1 = num1.length();
         int len2 = num2.length();
         String res = "";
 
-        for (int i = 0; i < len1; i++) {
+        for (int i = 0; i < len2; i++) {
             StringBuffer sb = new StringBuffer();
-            int num = num1.charAt(i)-'0';
-            String sum = null;
+            int num = num2.charAt(i)-'0';
+            String sum = "";
             int rem = 0;
-            for (int j = len2-1; j >= 0; j--) {
-                sb.append(((num2.charAt(j)-'0')*num+rem)%10);
-                rem = ((num2.charAt(j)-'0')*num+rem)/10;
+            for (int j = len1-1; j >= 0; j--) {
+                sb.append(((num1.charAt(j)-'0')*num+rem)%10);
+                rem = ((num1.charAt(j)-'0')*num+rem)/10;
             }
             if(rem!=0){
                 sb.append(rem);
             }
-            res = addString(res,sb.append(0).toString());
+            if(len2==1) {
+               return sb.reverse().toString();
+            }
+            res = addString(res+"0", sb.reverse().toString());
         }
         return res;
     }
